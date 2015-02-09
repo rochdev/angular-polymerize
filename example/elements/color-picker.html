@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="color-picker" attributes="color">
+  <template>
+    <p>
+      color: <b style="color: {{color}}">{{color}}</b>.
+    </p>
+
+    <button on-click="{{changeColor}}">Change color</button>
+
+    <content></content>
+  </template>
+
+  <script>
+    Polymer({
+      color: "red",
+      changeColor: function() {
+        this.color = this.color === 'blue' ? 'red' : 'blue';
+      },
+      colorChanged: function() {
+        this.fire('change');
+      }
+    });
+  </script>
+</polymer-element>

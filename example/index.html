@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+  <head>
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="elements/color-picker.html">
+  </head>
+
+  <body ng-controller="DemoController">
+    <h3>Polymer</h3>
+
+    <color-picker color="myColor" on-change="onColorChange(myColor)">
+      <h3>AngularJS inside Polymer &lt;content&gt;</h3>
+
+      <p>color: <b ng-style="{color: myColor}">{{myColor}}</b></p>
+
+      <button ng-click="changeColor()">Change color</button>
+    </color-picker>
+
+    <h3>AngularJS</h3>
+
+    <p>color: <b ng-style="{color: myColor}">{{myColor}}</b></p>
+
+    <button ng-click="changeColor()">Change color</button>
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/observe-js/src/observe.js"></script>
+    <script src="../angular-polymerize.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
