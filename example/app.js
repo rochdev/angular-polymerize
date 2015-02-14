@@ -11,7 +11,6 @@ angular.module('demo', ['polymerize'])
   })
   .config(function(polymerizeProvider) {
     polymerizeProvider.directive([
-      'paperButton',
       'colorPicker'
     ]);
   });

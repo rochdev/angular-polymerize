@@ -12,7 +12,8 @@
    * @module polymerize
    *
    * @description
-   * The {@link polymerize} service provider is used to configure directives automatically.
+   * The {@link polymerize} service provider is used to configure directives
+   * automatically.
    */
   function PolymerizeProvider($compileProvider) {
     // Public methods
@@ -25,16 +26,16 @@
      * @kind function
      * @module polymerize
      *
-     * @param {(string|Array)} name The name of the directive to create from a Polymer element.
+     * @param {(string|Array)} names The name(s) of the directive(s) to create.
      *
      * @description
-     * The `directive` method.
+     * Create one or several directives from Polymer elements.
      */
-    function directive(name) {
-      [].concat(name).forEach(function(directiveName) {
-        $compileProvider.directive(directiveName, ['polymerize', function(polymerize) {
+    function directive(names) {
+      [].concat(names).forEach(function(name) {
+        $compileProvider.directive(name, ['polymerize', function(polymerize) {
           return {
-            link: polymerize.bind
+            link: polymerize.link
           };
         }]);
       });
@@ -49,15 +50,16 @@
      * @module polymerize
      *
      * @description
-     * The `polymerize` service is used to bind an AngularJS directive to a Polymer element.
+     * The `polymerize` service is used to bind AngularJS directives to
+     * Polymer elements.
      */
     function Polymerize() {
       // Public methods
-      this.bind = bind;
+      this.link = link;
 
       /**
        * @ngdoc method
-       * @name polymerize#bind
+       * @name polymerize#link
        * @kind function
        * @module polymerize
        *
@@ -66,9 +68,9 @@
        * @param {Object} attrs The directive attributes
        *
        * @description
-       * The `bind` method.
+       * Bind an AngularJS directive to a Polymer element.
        */
-      function bind(scope, element, attrs) {
+      function link(scope, element, attrs) {
         Object.keys(attrs.$attr).forEach(function(attr) {
           if (attrs.$attr[attr].indexOf('on-') === 0) {
             // Attach event handler
@@ -78,7 +80,7 @@
           } else {
             // Bind from AngularJS to Polymer
             scope.$watch(attrs[attr], function(value) {
-              element[0][attr] = value;
+              element.attr(attr, value);
             });
 
             // Bind from Polymer to AngularJS
