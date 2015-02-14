@@ -14,3 +14,5 @@ angular.module('demo', ['polymerize'])
       'colorPicker'
     ]);
   });
+
+Polymerize.bootstrap(document, ['demo']);

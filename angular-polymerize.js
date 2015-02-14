@@ -1,6 +1,8 @@
 (function(angular) {
   'use strict';
 
+  window.Polymerize = Polymerize;
+
   var module = angular.module('polymerize', []);
 
   module.provider('polymerize', ['$compileProvider', PolymerizeProvider]);
@@ -17,7 +19,7 @@
    */
   function PolymerizeProvider($compileProvider) {
     // Public methods
-    this.$get = ['$parse', '$window', polymerizeFactory];
+    this.$get = ['$injector', polymerizeFactory];
     this.directive = directive;
 
     /**
@@ -42,62 +44,71 @@
     }
   }
 
-  function polymerizeFactory($parse, $window) {
+  /**
+   * @ngdoc service
+   * @name polymerize
+   * @kind object
+   * @module polymerize
+   *
+   * @description
+   * The `polymerize` service is used to bind AngularJS directives to
+   * Polymer elements.
+   */
+  function Polymerize($parse, $window) {
+    // Public methods
+    this.link = link;
+
     /**
-     * @ngdoc service
-     * @name polymerize
-     * @kind object
+     * @ngdoc method
+     * @name polymerize#link
+     * @kind function
      * @module polymerize
      *
+     * @param {Object} scope The directive scope
+     * @param {DOMElement} element The directive element
+     * @param {Object} attrs The directive attributes
+     *
      * @description
-     * The `polymerize` service is used to bind AngularJS directives to
-     * Polymer elements.
+     * Bind an AngularJS directive to a Polymer element.
      */
-    function Polymerize() {
-      // Public methods
-      this.link = link;
+    function link(scope, element, attrs) {
+      Object.keys(attrs.$attr).forEach(function(attr) {
+        if (attrs.$attr[attr].indexOf('on-') === 0) {
+          // Attach event handler
+          element.on(attrs.$attr[attr].substr(3), function() {
+            scope.$evalAsync(attrs[attr]);
+          });
+        } else {
+          // Bind AngularJS <-> Polymer
+          var observer = new $window.PathObserver(scope, attrs[attr]);
 
-      /**
-       * @ngdoc method
-       * @name polymerize#link
-       * @kind function
-       * @module polymerize
-       *
-       * @param {Object} scope The directive scope
-       * @param {DOMElement} element The directive element
-       * @param {Object} attrs The directive attributes
-       *
-       * @description
-       * Bind an AngularJS directive to a Polymer element.
-       */
-      function link(scope, element, attrs) {
-        Object.keys(attrs.$attr).forEach(function(attr) {
-          if (attrs.$attr[attr].indexOf('on-') === 0) {
-            // Attach event handler
-            element.on(attrs.$attr[attr].substr(3), function() {
-              scope.$evalAsync(attrs[attr]);
-            });
-          } else {
-            // Bind from AngularJS to Polymer
-            scope.$watch(attrs[attr], function(value) {
-              element.attr(attr, value);
-            });
+          $window.wrap(element[0]).bind(attrs.$attr[attr], observer);
 
-            // Bind from Polymer to AngularJS
-            var observer = new $window.PathObserver(element[0], attr + '_');
-
-            observer.open(function(newValue) {
-              var setter = $parse(attrs[attr]).assign;
-
-              setter(scope, newValue);
-
-              scope.$apply();
+          // Synchronize Polymer with AngularJS for browsers without O.o
+          if ($window.Platform && Object.observe === undefined) {
+            scope.$watch(attrs[attr], function() {
+              $window.Platform.performMicrotaskCheckpoint();
             });
           }
-        });
-      }
+        }
+      });
     }
+  }
 
-    return new Polymerize();
+  /**
+   * @description
+   * Bootstrap AngularJS modules only after Polymer has been initialized
+   *
+   * @see {@link https://docs.angularjs.org/api/ng/function/angular.bootstrap}
+   * for usage.
+   */
+  Polymerize.bootstrap = function(element, modules, config) {
+    window.addEventListener('polymer-ready', function() {
+      angular.bootstrap(element, modules, config);
+    });
+  };
+
+  function polymerizeFactory($injector) {
+    return $injector.instantiate(['$parse', '$window', Polymerize]);
   }
 })(window.angular);

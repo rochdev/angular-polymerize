@@ -4,7 +4,7 @@
   "description": "Use Polymer elements inside an AngularJS application.",
   "main": "angular-polymerize.js",
   "scripts": {
-    "test": "./node_modules/jshint/bin/jshint angular-polymerize.js angular-polymerize.spec.js && ./node_modules/karma/bin/karma start --single-run",
+    "test": "./node_modules/jshint/bin/jshint --extract=auto angular-polymerize.js test/angular-polymerize.spec.html && ./node_modules/web-component-tester/bin/wct",
     "build": "./node_modules/uglify-js/bin/uglifyjs angular-polymerize.js -c --comments -m --source-map angular-polymerize.min.js.map -o angular-polymerize.min.js"
   },
   "author": "Roch Devost",
@@ -20,12 +20,7 @@
   "private": true,
   "devDependencies": {
     "jshint": "^2.6.0",
-    "karma": "^0.12.31",
-    "karma-chai-plugins": "^0.2.4",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-firefox-launcher": "^0.1.4",
-    "karma-mocha": "^0.1.10",
-    "karma-mocha-reporter": "^0.3.1",
-    "uglify-js": "^2.4.16"
+    "uglify-js": "^2.4.16",
+    "web-component-tester": "^2.2.3"
   }
 }
