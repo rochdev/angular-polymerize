@@ -4,3 +4,7 @@ node_js:
 before_script:
   - npm install -g bower
   - bower install
+env:
+  global:
+    - secure: RQWGz3qRqGwS/46S0GfUJ3pjCoXNYRae3v9U4j4pfs/LpTV6njUPHCXQyscB5lkBCHMEEemtG7HDNJr7RrSORMB6JSXOvZZiRhH29YxU9LuHSr5AvotQo6WdxMW43704HrarclcLxN9q5ZMMiNG3wAIZUHeTqSFoRPa35bMjEfU=
+    - secure: nD5oEPXG1FIaGyWuCfPniOkzjiAqPIj2EF0x4DfbTsXGB0bcqUqRj4Ucdcco34wafUDGWYzNa5BlxZ/Fc0TkImz0d73hrXUgw9PxHN0kFar9Aj3gI3twiJwtS6BimhWuxWUiiL6Fd2gNFFhJ3OqcaYUm9/QUyIfvguQZiYvoLiU=
