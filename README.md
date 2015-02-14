@@ -2,6 +2,12 @@
 
 Creates [AngularJS][angular-url] directives from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
 
+## Installation
+
+```sh
+$ bower install angular-polymerize
+```
+
 ## Configuration
 
 The easiest way to use Polymerize is to use the provider to create the directives automatically for you:
