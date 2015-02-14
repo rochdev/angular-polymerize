@@ -1,4 +1,4 @@
-# Polymerize [![License][license-image]][license-url]
+# Polymerize [![Build][build-image]][build-url] [![License][license-image]][license-url]
 
 Creates [AngularJS][angular-url] directives from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
 
