@@ -1,6 +1,6 @@
 {
   "name": "angular-polymerize",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Use Polymer elements inside an AngularJS application.",
   "authors": [
     "Roch Devost"
