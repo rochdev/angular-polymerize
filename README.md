@@ -1,4 +1,4 @@
-# Polymerize [![Build][build-image]][build-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
+# Polymerize [![Build][build-image]][build-url] [![Dependencies][deps-image]][deps-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
 
 Creates [AngularJS][angular-url] directives from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
 
@@ -69,6 +69,8 @@ See the [example](example) folder for a complete example.
 [bootstrap-url]: https://docs.angularjs.org/api/ng/function/angular.bootstrap
 [build-image]: http://img.shields.io/travis/rochdev/angular-polymerize/master.svg?style=flat-square
 [build-url]: https://travis-ci.org/rochdev/angular-polymerize
+[deps-image]: https://img.shields.io/gemnasium/rochdev/angular-polymerize.svg?style=flat-square
+[deps-url]: https://gemnasium.com/rochdev/angular-polymerize
 [license-image]: http://img.shields.io/badge/license-MIT-red.svg?style=flat-square
 [license-url]: http://en.wikipedia.org/wiki/MIT_License
 [ngapp-url]: https://docs.angularjs.org/api/ng/directive/ngApp
