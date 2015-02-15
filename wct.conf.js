@@ -2,9 +2,11 @@ module.exports = {
   verbose: false,
   plugins: {
     local: {
-      disabled: true
+      disabled: true,
+      browsers: ['chrome', 'firefox']
     },
     sauce: {
+      disabled: false,
       browsers: [
         {
           name: 'Chrome',

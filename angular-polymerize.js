@@ -54,7 +54,7 @@
    * The `polymerize` service is used to bind AngularJS directives to
    * Polymer elements.
    */
-  function Polymerize($parse, $window) {
+  function Polymerize($parse, $timeout, $window) {
     // Public methods
     this.link = link;
 
@@ -72,26 +72,55 @@
      * Bind an AngularJS directive to a Polymer element.
      */
     function link(scope, element, attrs) {
+      var publishNames = getHost()._publishNames;
+
       Object.keys(attrs.$attr).forEach(function(attr) {
         if (attrs.$attr[attr].indexOf('on-') === 0) {
-          // Attach event handler
-          element.on(attrs.$attr[attr].substr(3), function() {
-            scope.$evalAsync(attrs[attr]);
-          });
-        } else {
-          // Bind AngularJS <-> Polymer
-          var observer = new $window.PathObserver(scope, attrs[attr]);
-
-          $window.wrap(element[0]).bind(attrs.$attr[attr], observer);
-
-          // Synchronize Polymer with AngularJS for browsers without O.o
-          if ($window.Platform && Object.observe === undefined) {
-            scope.$watch(attrs[attr], function() {
-              $window.Platform.performMicrotaskCheckpoint();
-            });
-          }
+          attachHandler(attr);
+        } else if (publishNames.indexOf(attr) !== -1) {
+          bindToPolymer(attr);
+          bindToAngular(attr);
+          keepInSync(attr);
         }
       });
+
+      function attachHandler(attr) {
+        element.on(attrs.$attr[attr].substr(3), function() {
+          scope.$evalAsync(attrs[attr]);
+        });
+      }
+
+      function bindToPolymer(attr) {
+        var observer = new $window.PathObserver(scope, attrs[attr]);
+
+        $window.wrap(element[0]).bind(attrs.$attr[attr], observer);
+      }
+
+      function bindToAngular(attr) {
+        var observer = new $window.PathObserver(getHost(), attr);
+
+        observer.open(function() {
+          scope.$apply();
+        });
+      }
+
+      function keepInSync(attr) {
+        if ($window.Platform && Object.observe === undefined) {
+          scope.$watch(attrs[attr], function() {
+            $timeout(function() {
+              $window.Platform.performMicrotaskCheckpoint();
+            }, 0, false);
+          });
+        }
+      }
+
+      function getHost() {
+        if (element[0].polymerShadowRenderer_) {
+          return element[0].polymerShadowRenderer_.host;
+        } else {
+          return element[0];
+        }
+      }
     }
   }
 
@@ -109,6 +138,6 @@
   };
 
   function polymerizeFactory($injector) {
-    return $injector.instantiate(['$parse', '$window', Polymerize]);
+    return $injector.instantiate(['$parse', '$timeout', '$window', Polymerize]);
   }
 })(window.angular);
