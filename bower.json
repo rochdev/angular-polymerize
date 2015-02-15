@@ -13,7 +13,7 @@
     "polymerjs",
     "polymer.js"
   ],
-  "main": "polymerize.js",
+  "main": "angular-polymerize.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
