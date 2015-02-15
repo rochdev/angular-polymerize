@@ -73,5 +73,5 @@ See the [example](example) folder for a complete example.
 [license-url]: http://en.wikipedia.org/wiki/MIT_License
 [ngapp-url]: https://docs.angularjs.org/api/ng/directive/ngApp
 [polymer-url]: https://www.polymer-project.org
-[version-image]: https://img.shields.io/github/release/rochdev/angular-polymerize.svg
+[version-image]: https://img.shields.io/github/release/rochdev/angular-polymerize.svg?style=flat-square
 [version-url]: https://github.com/rochdev/angular-polymerize
