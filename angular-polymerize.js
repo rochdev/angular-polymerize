@@ -73,12 +73,11 @@
      */
     function link(scope, element, attrs) {
       var host = $window.wrap(element[0]);
-      var publishNames = host._publishNames;
 
       Object.keys(attrs.$attr).forEach(function(attr) {
         if (attrs.$attr[attr].indexOf('on-') === 0) {
           attachHandler(attr);
-        } else if (publishNames.indexOf(attr) !== -1) {
+        } else if (host._publishNames.indexOf(attr) !== -1) {
           var getter = $parse(attrs[attr]);
 
           if (getter.assign) {
