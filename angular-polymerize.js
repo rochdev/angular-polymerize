@@ -7,6 +7,8 @@
 
   module.provider('polymerize', ['$compileProvider', PolymerizeProvider]);
 
+  deferBootstrap();
+
   /**
    * @ngdoc provider
    * @name polymerizeProvider
@@ -122,20 +124,19 @@
     }
   }
 
-  /**
-   * @description
-   * Bootstrap AngularJS modules only after Polymer has been initialized
-   *
-   * @see {@link https://docs.angularjs.org/api/ng/function/angular.bootstrap}
-   * for usage.
-   */
-  Polymerize.bootstrap = function(element, modules, config) {
-    window.addEventListener('polymer-ready', function() {
-      angular.bootstrap(element, modules, config);
-    });
-  };
-
   function polymerizeFactory($injector) {
     return $injector.instantiate(['$parse', '$timeout', '$window', Polymerize]);
+  }
+
+  function deferBootstrap() {
+    var name = window.name;
+
+    window.name = 'NG_DEFER_BOOTSTRAP!' + name;
+
+    window.addEventListener('polymer-ready', function() {
+      window.name = name;
+
+      angular.resumeBootstrap();
+    });
   }
 })(window.angular);

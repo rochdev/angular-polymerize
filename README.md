@@ -49,14 +49,6 @@ Once configured, you can simply use the Polymer element as any other AngularJS d
 <paper-input value="val" on-change="onChange(val)">
 ```
 
-## Bootstrapping
-
-Please note that if you want to use browsers other than Chrome, you cannot use [ngApp][ngapp-url] and must bootstrap only after Polymer is ready. Polymerize provides a helper to do so which works the same as [angular.bootstrap][bootstrap-url] but waits for Polymer to be ready.
-
-```js
-Polymerize.bootstrap(document, ['app']);
-```
-
 ## Example
 
 See the [example](example) folder for a complete example.
