@@ -13,6 +13,7 @@
   <color-picker id="angular-to-polymer" color="color"></color-picker>
   <color-picker id="polymer-to-angular" color="color"></color-picker>
   <color-picker id="event-binding" on-change="onChange()"></color-picker>
+  <color-picker id="non-assignable" color="'red'"></color-picker>
 
   <script>
     /* jshint expr:true */
@@ -121,7 +122,6 @@
           $rootScope.$digest();
 
           $element[0].color = 'blue';
-          $element[0].color_ = 'blue';
 
           expect($scope.color).to.equal('blue');
         });
@@ -146,6 +146,23 @@
           $scope.$apply();
 
           expect($scope.onChange).to.have.been.called;
+        });
+
+        it('should bind non-assignable values from AngularJS to Polymer', function() {
+          $element = angular.element(document.getElementById('non-assignable'));
+
+          var attrs = {
+            $attr: {
+              color: 'color'
+            },
+            color: '\'red\''
+          };
+
+          polymerize.link($scope, $element, attrs);
+
+          $rootScope.$digest();
+
+          expect($element[0].color).to.equal('red');
         });
       });
     });

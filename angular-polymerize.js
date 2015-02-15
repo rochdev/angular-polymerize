@@ -78,9 +78,15 @@
         if (attrs.$attr[attr].indexOf('on-') === 0) {
           attachHandler(attr);
         } else if (publishNames.indexOf(attr) !== -1) {
-          bindToPolymer(attr);
-          bindToAngular(attr);
-          keepInSync(attr);
+          var getter = $parse(attrs[attr]);
+
+          if (getter.assign) {
+            bindToPolymer(attr);
+            bindToAngular(attr);
+            keepInSync(attr);
+          } else {
+            getHost()[attr] = getter(scope);
+          }
         }
       });
 
