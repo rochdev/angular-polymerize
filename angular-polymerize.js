@@ -5,7 +5,9 @@
 
   var module = angular.module('polymerize', []);
 
-  module.provider('polymerize', ['$compileProvider', PolymerizeProvider]);
+  module.provider('polymerize', [
+    '$compileProvider', '$windowProvider', PolymerizeProvider
+  ]);
 
   deferBootstrap();
 
@@ -19,10 +21,14 @@
    * The {@link polymerize} service provider is used to configure directives
    * automatically.
    */
-  function PolymerizeProvider($compileProvider) {
+  function PolymerizeProvider($compileProvider, $windowProvider) {
     // Public methods
     this.$get = ['$injector', polymerizeFactory];
     this.directive = directive;
+
+    $windowProvider.$get().Polymer.elements.forEach(function(element) {
+      directive(camelCase(element.name));
+    });
 
     /**
      * @ngdoc method
@@ -138,5 +144,20 @@
 
       angular.resumeBootstrap();
     });
+  }  
+
+  function camelCase(str) {
+    str = str.trim();
+
+    if (str.length === 1 || !(/[_.\- ]+/).test(str)) {
+      return str;
+    }
+
+    return str
+      .replace(/^[_.\- ]+/, '')
+      .toLowerCase()
+      .replace(/[_.\- ]+(\w|$)/g, function(m, p1) {
+        return p1.toUpperCase();
+      });
   }
 })(window.angular);

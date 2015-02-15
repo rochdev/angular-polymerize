@@ -8,9 +8,17 @@ Creates [AngularJS][angular-url] directives from [Polymer][polymer-url] elements
 $ bower install angular-polymerize
 ```
 
-## Configuration
+## Usage
 
-The easiest way to use Polymerize is to use the provider to create the directives automatically for you:
+By default, all existing Polymer elements are automatically registered as AngularJS directives, which means you can use them as any other AngularJS directive:
+
+```html
+<paper-input value="val" on-change="onChange(val)">
+```
+
+## Custom configuration
+
+If you need to register an element that was unavailable when the `polymer-ready` event was triggered, you can use `polymerizeProvider` to do so:
 
 ```js
 var module = angular.module('app', ['polymerize']);
@@ -24,7 +32,7 @@ module.config(function(polymerizeProvider) {
 });
 ```
 
-If you need to create your own directive on top of a Polymer element you may use the service directly from the directive instead:
+If you need to create your own directive on top of a Polymer element you may use the `polymerize` service directly from the directive instead:
 
 ```js
 var module = angular.module('app', ['polymerize']);
@@ -39,14 +47,6 @@ module.directive('paperButton', function(polymerize) {
     }
   };
 });
-```
-
-## Usage
-
-Once configured, you can simply use the Polymer element as any other AngularJS directive:
-
-```html
-<paper-input value="val" on-change="onChange(val)">
 ```
 
 ## Example

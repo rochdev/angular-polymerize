@@ -8,9 +8,9 @@ angular.module('demo', ['polymerize'])
     $scope.onColorChange = function(color) {
       console.log('Color changed to ' + color);
     };
-  })
-  .config(function(polymerizeProvider) {
-    polymerizeProvider.directive([
-      'colorPicker'
-    ]);
   });
+  // .config(function(polymerizeProvider) {
+  //   polymerizeProvider.directive([
+  //     'colorPicker'
+  //   ]);
+  // });
