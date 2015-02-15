@@ -72,7 +72,8 @@
      * Bind an AngularJS directive to a Polymer element.
      */
     function link(scope, element, attrs) {
-      var publishNames = getHost()._publishNames;
+      var host = $window.wrap(element[0]);
+      var publishNames = host._publishNames;
 
       Object.keys(attrs.$attr).forEach(function(attr) {
         if (attrs.$attr[attr].indexOf('on-') === 0) {
@@ -85,7 +86,7 @@
             bindToAngular(attr);
             keepInSync(attr);
           } else {
-            getHost()[attr] = getter(scope);
+            host[attr] = getter(scope);
           }
         }
       });
@@ -99,11 +100,11 @@
       function bindToPolymer(attr) {
         var observer = new $window.PathObserver(scope, attrs[attr]);
 
-        $window.wrap(element[0]).bind(attrs.$attr[attr], observer);
+        host.bind(attrs.$attr[attr], observer);
       }
 
       function bindToAngular(attr) {
-        var observer = new $window.PathObserver(getHost(), attr);
+        var observer = new $window.PathObserver(host, attr);
 
         observer.open(function() {
           scope.$apply();
@@ -117,14 +118,6 @@
               $window.Platform.performMicrotaskCheckpoint();
             }, 0, false);
           });
-        }
-      }
-
-      function getHost() {
-        if (element[0].polymerShadowRenderer_) {
-          return element[0].polymerShadowRenderer_.host;
-        } else {
-          return element[0];
         }
       }
     }
