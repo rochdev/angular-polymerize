@@ -1,6 +1,6 @@
 # Polymerize [![Build][build-image]][build-url] [![Dependencies][deps-image]][deps-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
 
-Creates [AngularJS][angular-url] directives from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
+Creates [AngularJS][angular-url] directives with two-way data binding from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
 
 ## Installation
 
@@ -16,9 +16,9 @@ By default, all existing Polymer elements are automatically registered as Angula
 <paper-input value="val" on-change="onChange(val)">
 ```
 
-## Custom configuration
+## Advanced configuration
 
-If you need to register an element that was unavailable when the `polymer-ready` event was triggered, you can use `polymerizeProvider` to do so:
+If you need to register an element that was unavailable when the `polymer-ready` event was fired, you can use `polymerizeProvider` to do so:
 
 ```js
 var module = angular.module('app', ['polymerize']);

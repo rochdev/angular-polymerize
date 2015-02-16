@@ -9,8 +9,3 @@ angular.module('demo', ['polymerize'])
       console.log('Color changed to ' + color);
     };
   });
-  // .config(function(polymerizeProvider) {
-  //   polymerizeProvider.directive([
-  //     'colorPicker'
-  //   ]);
-  // });
