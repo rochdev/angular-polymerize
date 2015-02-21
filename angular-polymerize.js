@@ -62,9 +62,11 @@
    * The `polymerize` service is used to bind AngularJS directives to
    * Polymer elements.
    */
-  function Polymerize($parse, $timeout, $window) {
+  function Polymerize($parse, $rootScope, $timeout, $window) {
     // Public methods
     this.link = link;
+
+    keepInSync();
 
     /**
      * @ngdoc method
@@ -91,7 +93,6 @@
           if (getter.assign) {
             bindToPolymer(attr);
             bindToAngular(attr);
-            keepInSync(attr);
           } else {
             host[attr] = getter(scope);
           }
@@ -117,21 +118,23 @@
           scope.$apply();
         });
       }
+    }
 
-      function keepInSync(attr) {
-        if ($window.Platform && Object.observe === undefined) {
-          scope.$watch(attrs[attr], function() {
-            $timeout(function() {
-              $window.Platform.performMicrotaskCheckpoint();
-            }, 0, false);
-          });
-        }
+    function keepInSync() {
+      if ($window.Platform && Object.observe === undefined) {
+        $rootScope.$watch(function() {
+          $timeout(function() {
+            $window.Platform.performMicrotaskCheckpoint();
+          }, 0, false);
+        });
       }
     }
   }
 
   function polymerizeFactory($injector) {
-    return $injector.instantiate(['$parse', '$timeout', '$window', Polymerize]);
+    return $injector.instantiate([
+      '$parse', '$rootScope', '$timeout', '$window', Polymerize
+    ]);
   }
 
   function deferBootstrap() {
