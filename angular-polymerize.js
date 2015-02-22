@@ -100,8 +100,10 @@
       });
 
       function attachHandler(attr) {
-        element.on(attrs.$attr[attr].substr(3), function() {
-          scope.$evalAsync(attrs[attr]);
+        element.on(attrs.$attr[attr].substr(3), function(e) {
+          scope.$evalAsync(attrs[attr], {
+            $event: e
+          });
         });
       }
 
