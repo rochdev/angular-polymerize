@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "angular": "^1.2",
-    "polymer": "~0.5.4"
+    "polymer": "^1.0.0"
   },
   "devDependencies": {}
 }

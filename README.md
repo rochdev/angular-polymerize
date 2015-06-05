@@ -10,11 +10,13 @@ $ bower install angular-polymerize
 
 ## Usage
 
-By default, all existing Polymer elements are automatically registered as AngularJS directives, which means you can use them as any other AngularJS directive:
+By default, all custom elements are automatically registered as AngularJS directives, which means you can use them as any other AngularJS directive:
 
 ```html
 <paper-input value="val" on-change="onChange(val)">
 ```
+
+Please note that for this to work, Polymerize must be loaded before Polymer.
 
 ## Advanced configuration
 
