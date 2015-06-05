@@ -22,7 +22,8 @@
       properties: {
         color: {
           type: 'string',
-          notify: true
+          notify: true,
+          observer: 'colorChanged'
         }
       },
       changeColor: function() {
