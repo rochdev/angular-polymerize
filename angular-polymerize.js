@@ -76,7 +76,7 @@
      * The `polymerize` service is used to bind AngularJS directives to
      * Polymer elements.
      */
-    function Polymerize($parse, $rootScope, $timeout) {
+    function Polymerize($parse) {
       // Public methods
       this.link = link;
 
@@ -113,27 +113,21 @@
         function bind(attr) {
           var getter = $parse(attrs[attr]);
 
-          if (getter.assign) {
-            scope.$watch(attrs[attr], function(value) {
-              element[0][attr] = value;
-            });
+          scope.$watch(attrs[attr], function(value) {
+            element[0][attr] = value;
+          });
 
+          if (getter.assign) {
             element.on(attr + '-changed', function(e) {
-              $timeout(function() {
-                getter.assign(scope, e.detail.value);
-              });
+              getter.assign(scope, e.detail.value);
             });
-          } else {
-            element[0][attr] = getter(scope);
           }
         }
       }
     }
 
     function polymerizeFactory($injector) {
-      return $injector.instantiate([
-        '$parse', '$rootScope', '$timeout', Polymerize
-      ]);
+      return $injector.instantiate(['$parse', Polymerize]);
     }
 
     function camelCase(str) {

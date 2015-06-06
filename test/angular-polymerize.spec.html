@@ -143,8 +143,8 @@
           polymerize.link($scope, $element, attrs);
 
           $scope.$apply();
-
-          $element[0].dispatchEvent(new Event('change'));
+          
+          $element[0].color = 'blue';
 
           $scope.$apply();
 
