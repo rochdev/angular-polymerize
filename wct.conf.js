@@ -9,25 +9,30 @@ module.exports = {
       disabled: false,
       browsers: [
         {
-          name: 'Chrome',
+          name: 'Chrome (latest)',
           base: 'SauceLabs',
           browserName: 'chrome',
-          platform: 'Windows 8.1',
-          version: '40'
+          platform: 'Windows 8.1'
         },
         {
-          name: 'Firefox',
+          name: 'Firefox (latest)',
           base: 'SauceLabs',
           browserName: 'firefox',
-          platform: 'Windows 8.1',
-          version: '35'
+          platform: 'Windows 8.1'
         },
         {
-          name: 'Internet Explorer',
+          name: 'Internet Explorer 11',
           base: 'SauceLabs',
           browserName: 'internet explorer',
           platform: 'Windows 8.1',
           version: '11'
+        },
+        {
+          name: 'Safari 8',
+          base: 'SauceLabs',
+          browserName: 'safari',
+          platform: 'OS X 10.10',
+          version: '8'
         }
       ]
     }
