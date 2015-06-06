@@ -18,9 +18,7 @@
   window.addEventListener('WebComponentsReady', function() {
     var module = angular.module('polymerize', []);
 
-    module.provider('polymerize', [
-      '$compileProvider', PolymerizeProvider
-    ]);
+    module.provider('polymerize', ['$compileProvider', PolymerizeProvider]);
 
     window.name = windowName;
     window.angular.resumeBootstrap();
@@ -98,7 +96,8 @@
           if (attrs.$attr[attr].indexOf('on-') === 0) {
             attachHandler(attr);
           } else if (Object.keys(element[0]._config).indexOf(attr) !== -1) {
-            bind(attr);
+            bindToPolymer(attr);
+            bindFromPolymer(attr);
           }
         });
 
@@ -110,12 +109,14 @@
           });
         }
 
-        function bind(attr) {
-          var getter = $parse(attrs[attr]);
-
+        function bindToPolymer(attr) {
           scope.$watch(attrs[attr], function(value) {
             element[0][attr] = value;
           });
+        }
+
+        function bindFromPolymer(attr) {
+          var getter = $parse(attrs[attr]);
 
           if (getter.assign) {
             element.on(attr + '-changed', function(e) {
