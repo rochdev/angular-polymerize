@@ -1,5 +1,7 @@
 # Polymerize [![Build][build-image]][build-url] [![Dependencies][deps-image]][deps-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rochdev/angular-polymerize.svg)](https://greenkeeper.io/)
+
 Creates [AngularJS][angular-url] directives with two-way data binding from [Polymer][polymer-url] elements so that they can be used in an AngularJS application.
 
 ## Installation
